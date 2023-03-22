@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.zabava.firebase.databinding.UsersItemBinding
 
 class UsersAdapter(
-    var context: Context,
-    var userList: ArrayList<Users>
+    private var context: Context,
+    private var userList: ArrayList<Users>
     ): RecyclerView.Adapter<UsersAdapter.UsersViewHolder>() {
 
     inner class UsersViewHolder(val adapterBinding: UsersItemBinding)
@@ -44,5 +44,11 @@ class UsersAdapter(
     override fun getItemCount(): Int {
 
         return  userList.size
+    }
+
+    fun getUserId(position: Int): String {
+
+        return userList[position].userId
+
     }
 }

@@ -1,9 +1,17 @@
 package com.zabava.firebase
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import com.zabava.firebase.databinding.ActivityMainBinding
 
@@ -29,6 +37,31 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+                val id = usersAdapter.getUserId(viewHolder.adapterPosition)
+
+                myReference.child(id).removeValue()
+
+                Toast.makeText(applicationContext, "The user was deleted!", Toast.LENGTH_SHORT)
+                    .show()
+
+            }
+
+        }).attachToRecyclerView(mainBinding.rvMain)
+
         retrieveDataFromDatabase()
 
     }
@@ -44,13 +77,7 @@ class MainActivity : AppCompatActivity() {
 
                     val user = eachUser.getValue(Users::class.java)
 
-                    if (user != null){
-
-                        println("userId: ${user.userId}")
-                        println("userName: ${user.userName}")
-                        println("userAge: ${user.userAge}")
-                        println("userEmail: ${user.userEmail}")
-                        println("****************************")
+                    if (user != null) {
 
                         userList.add(user)
                     }
@@ -67,5 +94,54 @@ class MainActivity : AppCompatActivity() {
                 TODO("Not yet implemented")
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        menuInflater.inflate(R.menu.menu_delete_all, menu)
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if (item.itemId == R.id.deleteAll) {
+
+            showDialogMessage()
+
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun showDialogMessage() {
+
+        val dialogMessage = AlertDialog.Builder(this)
+        dialogMessage.setTitle("Delete All Users?")
+        dialogMessage.setMessage(
+            "If you click Yes, all users will be deleted," +
+                    "If you want to delete a specific user swipe left or right on !"
+        )
+        dialogMessage.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.cancel()
+        }
+        dialogMessage.setPositiveButton("Yes") { _, _ ->
+
+            myReference.removeValue().addOnCompleteListener { task ->
+
+                if (task.isSuccessful) {
+                    usersAdapter.notifyDataSetChanged()
+
+                    Toast.makeText(
+                        applicationContext,
+                        "All users were deleted!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Log.e("Error: ", task.exception.toString())
+                }
+            }
+        }
+        dialogMessage.create().show()
     }
 }

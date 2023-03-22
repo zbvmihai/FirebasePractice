@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Firebase</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="enter_age">Enter Age</string>
+    <string name="enter_e_mail">Enter E-mail</string>
+    <string name="update_user">Update User</string>
+    <string name="enter_name2">Enter Name</string>
+    <string name="enter_age2">Enter Age</string>
+    <string name="enter_e_mail2">Enter E-mail</string>
+    <string name="add_user2">Add User</string>
+    <string name="fab">Fab</string>
+    <string name="delete_all_users">Delete All Users</string>
 </resources>
