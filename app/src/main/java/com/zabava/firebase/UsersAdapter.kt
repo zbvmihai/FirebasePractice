@@ -1,6 +1,7 @@
 package com.zabava.firebase
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +28,16 @@ class UsersAdapter(
         holder.adapterBinding.tvName.text = userList[holder.adapterPosition].userName
         holder.adapterBinding.tvAge.text = userList[holder.adapterPosition].userAge.toString()
         holder.adapterBinding.tvEmail.text = userList[holder.adapterPosition].userEmail
+
+        holder.adapterBinding.linearLayout.setOnClickListener {
+
+            val intent = Intent(context, UpdateUserActivity::class.java)
+
+            intent.putParcelableArrayListExtra("usersList", userList)
+            intent.putExtra("position", holder.adapterPosition)
+            context.startActivity(intent)
+
+        }
 
     }
 
