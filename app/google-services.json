@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1098483723574",
+    "firebase_url": "https://examplekotlin-fca1b-default-rtdb.firebaseio.com",
+    "project_id": "examplekotlin-fca1b",
+    "storage_bucket": "examplekotlin-fca1b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1098483723574:android:d2b482509ee291a38e1797",
+        "android_client_info": {
+          "package_name": "com.zabava.firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1098483723574-pec017pjqcccbf0ajnsavr6llks73ekq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zabava.firebase",
+            "certificate_hash": "07f696a16817d20302efa0937272040a38679c89"
+          }
+        },
+        {
+          "client_id": "1098483723574-5gfln4qjhaptqvus6i5insfcaj4jkaju.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOOUgE2YiX9vXWiAiIOmISGPNxnNenNq8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1098483723574-5gfln4qjhaptqvus6i5insfcaj4jkaju.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
