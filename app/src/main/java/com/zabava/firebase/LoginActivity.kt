@@ -40,7 +40,6 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(userEmail, userPassword)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-
                     Toast.makeText(applicationContext,"Login is successful",Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@LoginActivity,MainActivity::class.java)
                     startActivity(intent)
@@ -51,5 +50,18 @@ class LoginActivity : AppCompatActivity() {
                     Log.e("Error: ", task.exception.toString())
                 }
             }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val user = auth.currentUser
+
+        if (user != null) {
+
+            val intent = Intent(this@LoginActivity,MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 }

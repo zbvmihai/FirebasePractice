@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/deleteAll"
         android:icon="@drawable/delete_icon"
-        android:title="@string/delete_all_users"
-        app:showAsAction="always|withText" />
+        android:title="@string/delete_all_users" />
+    <item
+        android:id="@+id/signOut"
+        android:title="@string/sign_out" />
 </menu>

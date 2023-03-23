@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.zabava.firebase.databinding.ActivityMainBinding
 
@@ -109,7 +110,15 @@ class MainActivity : AppCompatActivity() {
 
             showDialogMessage()
 
+        }else if(item.itemId == R.id.signOut){
+
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(this@MainActivity, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+
         }
+
         return super.onOptionsItemSelected(item)
     }
 
