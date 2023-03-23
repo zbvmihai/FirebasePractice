@@ -40,6 +40,11 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
 
         }
+
+        loginBinding.BtnLoginWithPhone.setOnClickListener {
+            val intent = Intent(this, PhoneActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 
