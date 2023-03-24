@@ -56,14 +56,14 @@ class AddUserActivity : AppCompatActivity() {
 
     private fun chooseImage() {
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-            != PackageManager.PERMISSION_GRANTED
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
         ) {
 
             ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                1
+                this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1
             )
 
         } else {
@@ -77,19 +77,23 @@ class AddUserActivity : AppCompatActivity() {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if (requestCode == 1 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == 1 && grantResults.isNotEmpty() && grantResults[0]
+            == PackageManager.PERMISSION_GRANTED) {
+
             val intent = Intent()
             intent.type = "image/*"
             intent.action = Intent.ACTION_GET_CONTENT
             activityResultLauncher.launch(intent)
         } else {
-            Toast.makeText(applicationContext,"Permissions Denied. Go to application settings to enable it.",Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                applicationContext,
+                "Permissions Denied. Go to application settings to enable it.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -114,7 +118,7 @@ class AddUserActivity : AppCompatActivity() {
         }
     }
 
-    private fun addUserToDatabase(url: String) {
+    private fun addUserToDatabase(url: String, imageName: String) {
 
         val name: String = addUserBinding.etName.text.toString()
         val age: Int = addUserBinding.etAge.text.toString().toInt()
@@ -122,7 +126,7 @@ class AddUserActivity : AppCompatActivity() {
 
         val id: String = myReference.push().key.toString()
 
-        val user = Users(id, name, age, email,url)
+        val user = Users(id, name, age, email, url,imageName)
 
         myReference.child(id).setValue(user).addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -158,7 +162,7 @@ class AddUserActivity : AppCompatActivity() {
         imageUri?.let { uri ->
 
             imageReference.putFile(uri).addOnSuccessListener {
-                Toast.makeText(applicationContext,"Image uploaded",Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Image uploaded", Toast.LENGTH_SHORT).show()
 
                 val myUploadImageReference = storageReference.child("UsersImages").child(imageName)
 
@@ -166,11 +170,11 @@ class AddUserActivity : AppCompatActivity() {
 
                     val imageURL = url.toString()
 
-                    addUserToDatabase(imageURL)
+                    addUserToDatabase(imageURL,imageName)
                 }
 
-            }.addOnFailureListener{
-                Toast.makeText(applicationContext,"Upload failed",Toast.LENGTH_SHORT).show()
+            }.addOnFailureListener {
+                Toast.makeText(applicationContext, "Upload failed", Toast.LENGTH_SHORT).show()
                 it.localizedMessage?.let { it1 -> Log.e("Error: ", it1) }
             }
         }

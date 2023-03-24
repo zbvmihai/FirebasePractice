@@ -24,4 +24,9 @@
     <string name="verify_code">Verify Code</string>
     <string name="to_select_a_profile_image_click_on_the_picture">To select a profile image, click on the picture</string>
     <string name="todo">TODO</string>
+    <string name="todo2">TODO</string>
+    <string name="text_view">Text View</string>
+    <string name="text_view2">Text View</string>
+    <string name="text_view3">Text View</string>
+    <string name="log_in_with_phone_number">Log In With Phone Number</string>
 </resources>

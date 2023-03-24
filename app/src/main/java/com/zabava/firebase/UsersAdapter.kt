@@ -2,10 +2,16 @@ package com.zabava.firebase
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import com.zabava.firebase.databinding.UsersItemBinding
+import java.lang.Exception
 
 class UsersAdapter(
     private var context: Context,
@@ -29,6 +35,19 @@ class UsersAdapter(
         holder.adapterBinding.tvAge.text = userList[holder.adapterPosition].userAge.toString()
         holder.adapterBinding.tvEmail.text = userList[holder.adapterPosition].userEmail
 
+        val imageUrl = userList[holder.adapterPosition].url
+
+        Picasso.get().load(imageUrl).into(holder.adapterBinding.ivUser, object : Callback{
+            override fun onSuccess() {
+                holder.adapterBinding.pbUser.visibility = View.INVISIBLE
+            }
+
+            override fun onError(e: Exception?) {
+                Toast.makeText(context, "Error loading the image.",Toast.LENGTH_SHORT).show()
+                e?.localizedMessage?.let { Log.e("Error: ", it) }
+            }
+        })
+
         holder.adapterBinding.linearLayout.setOnClickListener {
 
             val intent = Intent(context, UpdateUserActivity::class.java)
@@ -38,7 +57,6 @@ class UsersAdapter(
             context.startActivity(intent)
 
         }
-
     }
 
     override fun getItemCount(): Int {
